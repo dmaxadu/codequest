@@ -1,0 +1,21 @@
+/* ConceptScreen.css */
+.concept-screen {
+    background-color: #2a2a2a;
+    border-radius: 10px;
+    padding: 20px;
+    width: 90%;
+    max-width: 500px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.concept-screen h2 {
+    color: #b84ef1;
+    margin-bottom: 10px;
+}
+
+.concept-screen p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #d1d1d1;
+}

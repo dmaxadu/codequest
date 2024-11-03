@@ -1,0 +1,16 @@
+/* ProgressBar.css */
+.progress-bar-container {
+    width: 90%;
+    max-width: 500px;
+    height: 12px;
+    background-color: #333;
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 20px 0;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background-color: #b84ef1; /* Cor roxa de destaque */
+    transition: width 0.4s ease;
+}

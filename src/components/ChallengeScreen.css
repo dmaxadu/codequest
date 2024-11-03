@@ -1,0 +1,41 @@
+/* ChallengeScreen.css */
+.challenge-screen {
+    background-color: #2a2a2a;
+    border-radius: 10px;
+    padding: 20px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.challenge-screen p {
+    font-size: 1rem;
+    color: #d1d1d1;
+    margin-bottom: 10px;
+}
+
+.challenge-screen input[type="text"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 2px solid #555;
+    border-radius: 5px;
+    background-color: #333;
+    color: #ffffff;
+    font-size: 1rem;
+}
+
+.challenge-screen button {
+    background-color: #b84ef1;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.challenge-screen button:hover {
+    background-color: #a040d0;
+}

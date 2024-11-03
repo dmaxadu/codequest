@@ -1,0 +1,29 @@
+.score-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #1a1a1a; /* Fundo mais escuro */
+    position: relative; /* Para posicionar o Confetti corretamente */
+    overflow: hidden; /* Para ocultar qualquer confete que ultrapasse a tela */
+}
+
+.score-content {
+    color: white;
+    text-align: center;
+    z-index: 1; /* Para garantir que o texto fique acima do confete */
+}
+
+button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #6200ea; /* Cor roxa */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #3700b3; /* Cor de hover */
+}
