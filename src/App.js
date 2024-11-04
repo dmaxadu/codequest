@@ -1,87 +1,72 @@
-import React, { useState, useEffect } from 'react';
-import ProgressBar from './components/ProgressBar';
-import ConceptScreen from './components/ConceptScreen';
-import ChallengeScreen from './components/ChallengeScreen';
-import ScoreScreen from './components/ScoreScreen';
-import { concepts } from './Data';
+import React, { useEffect, useState } from 'react';
 import './App.css';
-
-const getRandomConcepts = (conceptList, count) => {
-    const shuffled = [...conceptList].sort(() => Math.random() - 0.5);
-    return shuffled.slice(0, count);
-};
+import { concepts } from './concepts';
 
 const App = () => {
-    const [selectedConcepts, setSelectedConcepts] = useState([]);
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [score, setScore] = useState(0);
-    const [progress, setProgress] = useState(0);
+    var lastChallenges = []
+    const [currentChallenge, setCurrentChallenge] = useState({})
+    const [streak, setStreak] = useState(0)
+    const [alternatives, setAlternatives] = useState([])
+    const [consecutiveErros, setConsecutiveErros] = useState(0)
 
     useEffect(() => {
-        const randomConcepts = getRandomConcepts(concepts, 10);
-        setSelectedConcepts(randomConcepts);
-    }, []);
-
-    const totalConcepts = selectedConcepts.length;
-
-    const updateProgress = () => {
-        const newProgress = ((currentIndex + 1) / totalConcepts) * 100;
-        setProgress(newProgress);
-    };
-
-    const handleConfirm = (isCorrect) => {
-        if (isCorrect) {
-            handleScoreUpdate(2);
-        } else {
-            handleScoreUpdate(-1);
+        var index = -1;
+        while(index < 0 || lastChallenges.indexOf(index) !== -1){
+            index = Math.floor(Math.random() * concepts.challenges.length)
         }
 
-        // Mover para o próximo conceito ou ir para a tela de pontuação
-        if (currentIndex < totalConcepts - 1) {
-            setCurrentIndex(currentIndex + 1);
-            updateProgress();
-        } else {
-            // Se for o último conceito, vá para a tela de pontuação
-            setCurrentIndex(totalConcepts); // Atualiza para forçar a exibição da tela de pontuação
+        setCurrentChallenge(concepts.challenges[index])
+
+        var currentAlternatives = []
+        currentAlternatives.push(index)
+        for(let i = 0; i < 3; i++){
+            var alternativeIndex = -1;
+            while(alternativeIndex < 0 || currentAlternatives.indexOf(alternativeIndex) !== -1){
+                alternativeIndex = Math.floor(Math.random() * concepts.challenges.length)
+            }
+            currentAlternatives.push(alternativeIndex)   
         }
-    };
+        shuffle(currentAlternatives)
+        setAlternatives(currentAlternatives)
+    }, [streak, consecutiveErros])
 
-    const handleScoreUpdate = (points) => {
-        setScore(score + points);
-    };
-
-    const handleRestart = () => {
-        const randomConcepts = getRandomConcepts(concepts, 10);
-        setSelectedConcepts(randomConcepts);
-        setCurrentIndex(0);
-        setScore(0);
-        setProgress(0);
-    };
-
-    // Verifica se chegou ao final dos conceitos
-    if (currentIndex >= totalConcepts) {
-        return <ScoreScreen score={score} onRestart={handleRestart} />;
+    const checkAnswer = (alternative) => {
+        if(alternative === currentChallenge.id){
+            console.log("Resposta correta para a questão ", currentChallenge.id)
+            setStreak(streak + 1)
+            setConsecutiveErros(0)
+        }
+        else {
+            if(streak === 0){
+                setConsecutiveErros(consecutiveErros + 1)
+            } else {
+                setStreak(0)
+            }
+        }
     }
+
+    function shuffle(array) {
+        let currentIndex = array.length;
+        while (currentIndex !== 0) {
+          let randomIndex = Math.floor(Math.random() * currentIndex);
+          currentIndex--;
+          [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+        }
+      }
+      
 
     return (
         <div className="app-container">
-            <h1>CodeQuest</h1>
-            <ProgressBar progress={progress} />
-            {selectedConcepts.length > 0 && (
-                <>
-                    <ConceptScreen 
-                        title={selectedConcepts[currentIndex].title} 
-                        description={selectedConcepts[currentIndex].description} 
-                    />
-                    <ChallengeScreen 
-                        challenge={selectedConcepts[currentIndex].challenge} 
-                        solution={selectedConcepts[currentIndex].solution} 
-                        onConfirm={handleConfirm} 
-                        onScoreUpdate={handleScoreUpdate} 
-                    />
-                </>
-            )}
-            <p>Pontuação: {score}</p>
+            <h1 className='title'>codeQuest</h1>
+            <h2>{currentChallenge.pergunta}</h2>
+            <div className="alternative-wrapper">
+                {
+                    alternatives.map(alternative => (
+                        <div className="alternative-div" onClick={() => checkAnswer(alternative)}>{concepts.challenges[alternative].resposta}</div>
+                    ))
+                }
+            </div>
+            <h3 className='streak'>🔥 {streak}</h3>
         </div>
     );
 };
