@@ -48,3 +48,38 @@ input[type="text"] {
   background-color: #333;
   color: #ffffff;
 }
+
+.alternative-wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+  height: 200px;
+  justify-content: space-around;
+  align-items: center
+}
+
+.alternative-div {
+  width: 20%;
+  height: 150px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #b84ef1;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.alternative-div:hover {
+  background-color: #952acf;
+}
+
+.title {
+  position: absolute;
+  top: 20px;
+}
+
+.streak {
+  margin-top: 50px;
+}
